@@ -16,66 +16,57 @@
 
 ### Association
 
-- has_many :products
-- belongs_to :buyers
-- belongs_to :cards
+- has_many :items
+- has_many :orders
+- belongs_to :card
 
-## products テーブル
+## items テーブル
 
 | Column | Type    | Options     |
 | ------ | ------- | ----------- |
 | name             | string     | null: false |
 | item_description | string     | null: false |
-| item_status      | string     | null: false |
-| shipping_cost    | string     | null: false |
-| shipping_days    | string     | null: false |
-| ship_form        | string     | null: false |
-| price            | string     | null: false |
+| category_id      | integer    | null: false |
+| status_id        | integer    | null: false |
+| ship_cost_id     | integer    | null: false |
+| ship_days_id     | integer    | null: false |
+| ship_form_id     | integer    | null: false |
+| price            | integer    | null: false |
 | user             | references | null: false, foreign_key: true |
-| category         | references | null: false, foreign_key: true |
-| brand            | references | foreign_key: true |
 
 ### Association
 
-- belongs_to :users
-- belongs_to :category
-- belongs_to :brand
-
-## category テーブル
-
-| Column | Type       | Options     |
-| ------ | ---------- | ------------|
-| name   | string     | null: false |
-
-### Association
-
-- has_many :products
-
-## brand テーブル
-
-| Column | Type       | Options     |
-| ------ | ---------- | ------------|
-| name   | string     |
-
-### Association
-
-- has_many :products
+- belongs_to :user
+- belongs_to :order
 
 ## buyers テーブル
 
 | Column        | Type   | Options     |
 | --------------| ------ | ----------- |
 | postal_code   | string | null: false |
-| prefecture    | string | null: false, unique: true |
+| prefecture_id | integer| null: false |
 | city          | string | null: false |
 | address       | string | null: false |
 | building_name | string |
 | phone_number  | string | null: false |
-| user          | references | null: false, foreign_key: true |
+| order         | references | null: false, foreign_key: true |
 
 ### Association
 
-- belongs_to :users
+- has_one :order
+
+## orders テーブル
+
+| Column        | Type       | Options     |
+| ------------- | ---------- | ------------|
+| user_id       | references | null: false, foreign_key: true |
+| item_id       | references | null: false, foreign_key: true |
+
+### Association
+
+- belongs_to :user
+- has_many :items
+- belongs_to :buyer
 
 ## cards テーブル
 
