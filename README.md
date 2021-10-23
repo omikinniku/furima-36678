@@ -18,7 +18,6 @@
 
 - has_many :items
 - has_many :orders
-- belongs_to :card
 
 ## items テーブル
 
@@ -30,7 +29,7 @@
 | status_id        | integer    | null: false |
 | ship_cost_id     | integer    | null: false |
 | ship_days_id     | integer    | null: false |
-| ship_form_id     | integer    | null: false |
+| prefecture_id    | integer    | null: false |
 | price            | integer    | null: false |
 | user             | references | null: false, foreign_key: true |
 
@@ -70,14 +69,3 @@
 <!-- 今回ほ実装では一回の買い物で1人が1つのitemしか購入できない為 -->
 - has_one :buyer
 <!-- orderが親、buyerが子の関係 -->
-
-## cards テーブル
-
-| Column        | Type       | Options     |
-| ------------- | ---------- | ------------|
-| customer_id   | string     | null: false |
-| card_id       | string     | null: false |
-
-### Association
-
-- belongs_to :users
