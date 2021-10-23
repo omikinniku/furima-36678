@@ -25,7 +25,7 @@
 | Column | Type    | Options     |
 | ------ | ------- | ----------- |
 | name             | string     | null: false |
-| item_description | string     | null: false |
+| item_description | text       | null: false |
 | category_id      | integer    | null: false |
 | status_id        | integer    | null: false |
 | ship_cost_id     | integer    | null: false |
@@ -37,7 +37,8 @@
 ### Association
 
 - belongs_to :user
-- belongs_to :order
+- has_one :order
+<!-- 商品テーブルは必ずしも購入履歴と紐付いている必要がないため。 -->
 
 ## buyers テーブル
 
@@ -53,20 +54,22 @@
 
 ### Association
 
-- has_one :order
+- belongs_to :order
 
 ## orders テーブル
 
-| Column        | Type       | Options     |
-| ------------- | ---------- | ------------|
-| user_id       | references | null: false, foreign_key: true |
-| item_id       | references | null: false, foreign_key: true |
+| Column     | Type       | Options     |
+| ---------- | ---------- | ------------|
+| user       | references | null: false, foreign_key: true |
+| item       | references | null: false, foreign_key: true |
 
 ### Association
 
 - belongs_to :user
-- has_many :items
-- belongs_to :buyer
+- belongs_to :item
+<!-- 今回ほ実装では一回の買い物で1人が1つのitemしか購入できない為 -->
+- has_one :buyer
+<!-- orderが親、buyerが子の関係 -->
 
 ## cards テーブル
 
