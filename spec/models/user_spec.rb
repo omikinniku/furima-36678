@@ -68,12 +68,12 @@ RSpec.describe User, type: :model do
       it 'last_name_kanaは全角カタカナでないと登録できない' do
         @user.last_name_kana = 'かな'
         @user.valid?
-        expect(@user.errors.full_messages).to include('Last name kana is invalid')
+        expect(@user.errors.full_messages).to include('Last name kana 全角カタカナで入力してください')
       end
       it 'first_name_kanaは全角カタカナでないと登録できない' do
         @user.first_name_kana = 'かな'
         @user.valid?
-        expect(@user.errors.full_messages).to include('First name kana is invalid')
+        expect(@user.errors.full_messages).to include('First name kana 全角カタカナで入力してください')
       end
       it '重複したemailが存在する場合登録できない' do
         @user.save
