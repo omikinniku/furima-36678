@@ -4,9 +4,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   
-  #下の記述は出品・購入機能で実装する記述
-  # has_many :items
-  # has_many :orders
+  #下の記述は出品・購入機能に対応するアソシエーション
+  has_many :items
+  has_many :orders
 
   validates :nickname, presence: true
   validates :email, presence: true, format: { with: /@.+/, message: "@を入れてください"} # @が必要
