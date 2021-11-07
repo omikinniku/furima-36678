@@ -2,7 +2,7 @@ class ItemsController < ApplicationController
   # ログインしてなければ、ログイン画面へ
   before_action :authenticate_user!, only: [:new, :create, :edit]
   
-  before_action :set_item, only: [:edit, :update, :show]
+  before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :move_to_index, only: [:edit]
 
   def index
@@ -33,6 +33,12 @@ class ItemsController < ApplicationController
       redirect_to item_path
     else
       render :edit
+    end
+  end
+
+  def destroy
+    if @item.destroy
+      redirect_to root_path
     end
   end
 
