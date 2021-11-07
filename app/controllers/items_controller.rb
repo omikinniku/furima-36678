@@ -26,13 +26,6 @@ class ItemsController < ApplicationController
 
   def edit
   end
-  # 投稿者以外がeditアクションにアクセスしたらトップページにリダイレクト
-  def move_to_index
-    @item = Item.find(params[:id])
-    unless user_signed_in? && current_user.id == @item.user_id
-      redirect_to action: :index
-    end
-  end
 
   def update
     if @item.update(item_params)
@@ -42,12 +35,20 @@ class ItemsController < ApplicationController
     end
   end
 
+  private
   def set_item
     @item = Item.find(params[:id])
   end
 
-  private
+  # 投稿者以外がeditアクションにアクセスしたらトップページにリダイレクト
+  def move_to_index
+    @item = Item.find(params[:id])
+    unless user_signed_in? && current_user.id == @item.user_id
+      redirect_to action: :index
+    end
+  end
 
+  private
   def item_params
     params.require(:item).permit(
       :name, :image, :item_description, :category_id, :status_id, :ship_cost_id, :ship_days_id, :prefecture_id, :price
