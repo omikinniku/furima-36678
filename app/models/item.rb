@@ -1,6 +1,6 @@
 class Item < ApplicationRecord
   belongs_to :user
-  # has_one :order
+  has_one :order
   has_one_attached :image
 
   #ActiveHashを用いて belongs_toを設定するには、下記の記述でmoduleを取り込む。
