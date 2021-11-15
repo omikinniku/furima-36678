@@ -4,6 +4,7 @@ class ItemsController < ApplicationController
   
   before_action :set_item, only: [:edit, :update, :show, :destroy]
   before_action :move_to_index, only: [:edit]
+  before_action :move_to_top, only: [:edit, :update]
 
   def index
     @items = Item.includes(:user).order("created_at DESC")
@@ -53,6 +54,14 @@ class ItemsController < ApplicationController
   def move_to_index
     unless current_user.id == @item.user_id
       redirect_to action: :index
+    end
+  end
+
+  def move_to_top
+    # itemsテーブルのidとordersテーブルのitem_idが一致する = 商品は購入されている
+    # ログイン時、自身が出品した売却済み商品の、商品情報編集ページに遷移しようとすると、トップページへ
+    if @item.user_id != current_user.id || @item.order != nil #ordersテーブルにあるitem_idがnil(空)でない時
+      redirect_to root_path
     end
   end
 
