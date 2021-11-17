@@ -1,14 +1,13 @@
 class OrdersController < ApplicationController
   before_action :authenticate_user!
   before_action :move_to_top, only: [:index, :create]
+  before_action :set_order, only: [:index, :create]
 
   def index
-    @item = Item.find(params[:item_id])
     @order_buyer = OrderBuyer.new # 購入者情報を入れる空のインスタンス変数を設定
   end
 
   def create
-    @item = Item.find(params[:item_id])
     @order_buyer = OrderBuyer.new(order_params)
     if @order_buyer.valid? #ApplicationRecordを継承していないことにより、saveメソッドにはバリデーションを実行する機能がないため
       pay_item
@@ -38,6 +37,10 @@ class OrdersController < ApplicationController
     if @item.user_id == current_user.id || @item.order != nil #ordersテーブルにあるitem_idがnil(空)でない時
       redirect_to root_path
     end
+  end
+
+  def set_order
+    @item = Item.find(params[:item_id])
   end
 
   def order_params
