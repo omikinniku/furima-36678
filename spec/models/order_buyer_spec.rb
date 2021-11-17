@@ -55,15 +55,20 @@ RSpec.describe OrderBuyer, type: :model do
         @order_buyer.valid?
         expect(@order_buyer.errors.full_messages).to include "Phone number can't be blank"
       end
+      it 'phone_numberが9桁以下では購入できない' do
+        @order_buyer.phone_number = '090123456'
+        @order_buyer.valid?
+        expect(@order_buyer.errors.full_messages).to include "Phone number 10桁または11桁の半角数字で入力してください"
+      end
       it 'phone_numberが12桁以上では購入できない' do
         @order_buyer.phone_number = '090123456789'
         @order_buyer.valid?
-        expect(@order_buyer.errors.full_messages).to include "Phone number 11桁以下の半角数字で入力してください"
+        expect(@order_buyer.errors.full_messages).to include "Phone number 10桁または11桁の半角数字で入力してください"
       end
       it 'phone_numberが半角数字でないと購入できない' do
         @order_buyer.phone_number = '０９０１２３４５６７８'
         @order_buyer.valid?
-        expect(@order_buyer.errors.full_messages).to include("Phone number 11桁以下の半角数字で入力してください")
+        expect(@order_buyer.errors.full_messages).to include("Phone number 10桁または11桁の半角数字で入力してください")
       end
       it 'userが紐付いていなければ購入できない' do
         @order_buyer.user_id = nil

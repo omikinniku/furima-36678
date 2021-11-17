@@ -7,7 +7,7 @@ class OrderBuyer
     validates :postal_code, format: {with: /\A[0-9]{3}-[0-9]{4}\z/}
     validates :city
     validates :address
-    validates :phone_number, format: {with: /\A[0-9]{11}\z/, message: "11桁以下の半角数字で入力してください"}
+    validates :phone_number, format: {with: /\A[0-9]{10,11}\z/, message: "10桁または11桁の半角数字で入力してください"}
     validates :item_id
     validates :user_id
     validates :token
